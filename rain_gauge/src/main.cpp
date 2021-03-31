@@ -4,7 +4,6 @@
 #include <CayenneLPP.h>
 
 #define DEFAULT_MM_PER_COUNT 0.254 // 0.01"
-#define BATTERY_SEND_INTERVAL 30 // in minutes
 
 #define ROW 0
 #define ROW_OFFSET 100
@@ -35,10 +34,10 @@ static void prepareTxFrame(uint8_t port)
 {
     // contains the LoRa frame
     CayenneLPP lpp(LORAWAN_APP_DATA_MAX_SIZE);
-    // send battery status only every "BATTERY_SEND_INTERVAL" minutes
+    // send battery status only every "BATTERY_SEND_INTERVAL_MINUTES" minutes
     if (battery_send_counter <= 0) {
 	lpp.addVoltage(1, getBatteryVoltage() / 1000.0);
-	battery_send_counter = BATTERY_SEND_INTERVAL;
+	battery_send_counter = BATTERY_SEND_INTERVAL_MINUTES;
     } else {
 	Serial.println("Skip adding batter volt");
 	battery_send_counter--;
