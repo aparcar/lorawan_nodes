@@ -1,4 +1,10 @@
 #define BATTERY_SEND_INTERVAL_MINUTES 360 // 6 hours
+#define TEMPERATURE_SEND_INTERVAL_MINUTES 30
+
+#define RAIN_GAUGE GPIO5
+#define ONE_WIRE_BUS GPIO6
+
+#define DEFAULT_MM_PER_COUNT 0.254 // 0.01"
 
 /* OTAA para should be set via AT commands */
 uint8_t devEui[] = { 0xC0, 0xFF, 0xEE, 0xC0, 0xFF, 0xEE, 0xCA, 0xFE };

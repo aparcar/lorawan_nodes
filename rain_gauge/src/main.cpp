@@ -2,15 +2,20 @@
 #include "LoRaWan_APP.h"
 #include "common.h"
 #include <CayenneLPP.h>
-
-#define DEFAULT_MM_PER_COUNT 0.254 // 0.01"
+#include <OneWire.h>
+#include <DallasTemperature.h>
 
 #define ROW 0
 #define ROW_OFFSET 100
 //CY_FLASH_SIZEOF_ROW is 256 , CY_SFLASH_USERBASE is 0x0ffff400
 #define addr CY_SFLASH_USERBASE + CY_FLASH_SIZEOF_ROW* ROW + ROW_OFFSET
 
+OneWire oneWire(ONE_WIRE_BUS);
+
+DallasTemperature sensors(&oneWire);
+
 uint8_t battery_send_counter = 0;
+uint8_t temperature_send_counter = 0;
 
 // send every minute
 uint32_t appTxDutyCycle = 60000;
@@ -51,6 +56,16 @@ static void prepareTxFrame(uint8_t port)
 	Serial.println("Skip adding rain fall");
     }
 
+    // send temperature status only every "TEMPERATURE_SEND_INTERVAL_MINUTES" minutes
+    if (temperature_send_counter <= 0) {
+	sensors.requestTemperatures();
+	lpp.addTemperature(1, sensors.getTempCByIndex(0));
+	temperature_send_counter = TEMPERATURE_SEND_INTERVAL_MINUTES;
+    } else {
+	Serial.println("Skip adding temperature");
+	temperature_send_counter--;
+    }
+
     appDataSize = lpp.getSize();
     Serial.printf("appDataSize = %i\n", appDataSize);
     lpp.getBuffer(), memcpy(appData, lpp.getBuffer(), appDataSize);
@@ -80,10 +95,7 @@ bool checkUserAt(char* cmd, char* content)
 // run on each interrupt aka tip of the seesaw
 void interrupt_handler()
 {
-    if (labs(millis() - last_switch) > 100) {
-	tips++;
-	last_switch = millis();
-    }
+    tips++;
 }
 
 void setup()
@@ -99,14 +111,18 @@ void setup()
     Serial.print(mm_per_tip.number, 4);
     Serial.println("mm");
 
+    sensors.begin();
+    sensors.requestTemperatures();
+    //Serial.println(sensors.getTempCByIndex(0));
+
     // enable user input via Serial
     enableAt();
 
     deviceState = DEVICE_STATE_INIT;
 
     // enable interrupt pin
-    PINMODE_INPUT_PULLDOWN(GPIO3);
-    attachInterrupt(GPIO3, interrupt_handler, RISING);
+    PINMODE_INPUT_PULLUP(RAIN_GAUGE);
+    attachInterrupt(RAIN_GAUGE, interrupt_handler, FALLING);
 
     LoRaWAN.ifskipjoin();
 }
