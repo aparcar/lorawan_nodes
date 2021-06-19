@@ -5,6 +5,8 @@
 #include <OneWire.h>
 #include <DallasTemperature.h>
 
+#define VERSION 2
+
 #define ROW 0
 #define ROW_OFFSET 100
 //CY_FLASH_SIZEOF_ROW is 256 , CY_SFLASH_USERBASE is 0x0ffff400
@@ -43,6 +45,8 @@ static void prepareTxFrame(uint8_t port)
     if (battery_send_counter <= 0) {
 	lpp.addVoltage(1, getBatteryVoltage() / 1000.0);
 	battery_send_counter = BATTERY_SEND_INTERVAL_MINUTES;
+
+	lpp.addDigitalOutput(1, VERSION);
     } else {
 	Serial.println("Skip adding batter volt");
 	battery_send_counter--;
