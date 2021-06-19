@@ -99,7 +99,9 @@ bool checkUserAt(char* cmd, char* content)
 // run on each interrupt aka tip of the seesaw
 void interrupt_handler()
 {
-    tips++;
+	//Serial.println("TIP");
+	tips++;
+	delay(250);
 }
 
 void setup()
