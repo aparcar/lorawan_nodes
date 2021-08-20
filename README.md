@@ -11,15 +11,17 @@
 
 ## active nodes
 
-| verbose name | ID               |
-| ---          | ---              |
-| rain-box-1   | 00253073E3D8A429 |
-| rain-box-2   | 2039823098092384 |
-| rain-box-3   | 013298498FA9DFAE |
-| rain-box-4   | 230948230598E9AD |
-| rain-box-5   | 23094809F8DF0982 |
-| rain-box-6   | E8743987987DFEAD |
-| temp-box-1   | 1230918230912830 |
+| verbose name   | ID                 |
+| ---            | ---                |
+| `humidity-1`   | `70B3D57ED0044290` |
+| `moisture-1`   | `70B3D57ED00444CD` |
+| `rain-box-1`   | `00253073E3D8A429` |
+| `rain-box-2`   | `2039823098092384` |
+| `rain-box-3`   | `013298498FA9DFAE` |
+| `rain-box-4`   | `230948230598E9AD` |
+| `rain-box-5`   | `23094809F8DF0982` |
+| `rain-box-6`   | `E8743987987DFEAD` |
+| `temp-box-1`   | `1230918230912830` |
 
 ## versions
 
