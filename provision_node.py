@@ -57,6 +57,8 @@ def AT_command(key, value):
 serial_connection = serial.Serial(node_serial, node_bitrate, timeout=1)
 
 for key, value in config["at_commands"].items():
+    if not value:
+        value = "0" * 16
     AT_command(key, str(value))
 
 # restart node
