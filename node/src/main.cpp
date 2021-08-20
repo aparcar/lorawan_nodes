@@ -4,17 +4,27 @@
 #include <CayenneLPP.h>
 #include <OneWire.h>
 #include <DallasTemperature.h>
+#include "VH400.h"
 
-#define VERSION 2
+#define VERSION 3
 
 #define ROW 0
 #define ROW_OFFSET 100
 //CY_FLASH_SIZEOF_ROW is 256 , CY_SFLASH_USERBASE is 0x0ffff400
 #define addr CY_SFLASH_USERBASE + CY_FLASH_SIZEOF_ROW* ROW + ROW_OFFSET
 
-OneWire oneWire(ONE_WIRE_BUS);
 
+#ifdef ONE_WIRE_PIN
+OneWire oneWire(ONE_WIRE_PIN);
 DallasTemperature sensors(&oneWire);
+#endif
+
+#ifdef SHT1x_DATA_PIN
+#include <SHT1x.h>
+// sht1x(data, clock)
+SHT1x sht1x(SHT1x_DATA_PIN, SHT1x_CLOCK_PIN);
+//SHT1x sht2x(GPIO2, GPIO1);
+#endif
 
 uint8_t battery_send_counter = 0;
 uint8_t temperature_send_counter = 0;
@@ -32,7 +42,7 @@ union {
 } mm_per_tip;
 
 // the tip counter and mm, reset after each cycle
-uint8_t tips = 0;
+static volatile uint8_t tips = 0;
 
 static unsigned long last_switch;
 
@@ -41,6 +51,7 @@ static void prepareTxFrame(uint8_t port)
 {
     // contains the LoRa frame
     CayenneLPP lpp(LORAWAN_APP_DATA_MAX_SIZE);
+
     // send battery status only every "BATTERY_SEND_INTERVAL_MINUTES" minutes
     if (battery_send_counter <= 0) {
 	lpp.addVoltage(1, getBatteryVoltage() / 1000.0);
@@ -52,6 +63,7 @@ static void prepareTxFrame(uint8_t port)
 	battery_send_counter--;
     }
 
+#ifdef RAIN_GAUGE_PIN
     if (tips > 0) {
 	Serial.printf("Tips = %i\n", tips);
 	lpp.addAnalogInput(1, mm_per_tip.number * tips);
@@ -59,11 +71,27 @@ static void prepareTxFrame(uint8_t port)
     } else {
 	Serial.println("Skip adding rain fall");
     }
+#endif
 
     // send temperature status only every "TEMPERATURE_SEND_INTERVAL_MINUTES" minutes
     if (temperature_send_counter <= 0) {
+#ifdef SHT1x_DATA_PIN
+	float tempC = sht1x.readTemperatureC();
+	lpp.addTemperature(2, tempC);
+	lpp.addRelativeHumidity(2, sht1x.readHumidity());
+	//lpp.addTemperature(3, sht2x.readTemperatureC());
+	//lpp.addRelativeHumidity(3, sht2x.readHumidity());
+#endif
+
+#ifdef ONE_WIRE_enalbed
 	sensors.requestTemperatures();
 	lpp.addTemperature(1, sensors.getTempCByIndex(0));
+#endif
+
+#ifdef VH400_PIN
+	lpp.addAnalogInput(2, readVH400(VH400_PIN));
+#endif
+
 	temperature_send_counter = TEMPERATURE_SEND_INTERVAL_MINUTES;
     } else {
 	Serial.println("Skip adding temperature");
@@ -99,8 +127,9 @@ bool checkUserAt(char* cmd, char* content)
 // run on each interrupt aka tip of the seesaw
 void interrupt_handler()
 {
-	//Serial.println("TIP");
 	tips++;
+	//Serial.print(mm_per_tip.number * tips);
+	//Serial.println("mm");
 	delay(250);
 }
 
@@ -117,18 +146,27 @@ void setup()
     Serial.print(mm_per_tip.number, 4);
     Serial.println("mm");
 
+#ifdef ONE_WIRE_PIN
     sensors.begin();
     sensors.requestTemperatures();
-    //Serial.println(sensors.getTempCByIndex(0));
+    Serial.print("Temp = ");
+    Serial.print(sensors.getTempCByIndex(0), 2);
+    Serial.println();
+#endif
 
     // enable user input via Serial
     enableAt();
-
     deviceState = DEVICE_STATE_INIT;
 
+#ifdef VH400_PIN
+    pinMode(VH400_PIN, INPUT);
+#endif
+
+#ifdef RAIN_GAUGE_PIN
     // enable interrupt pin
-    PINMODE_INPUT_PULLUP(RAIN_GAUGE);
-    attachInterrupt(RAIN_GAUGE, interrupt_handler, FALLING);
+    PINMODE_INPUT_PULLUP(RAIN_GAUGE_PIN);
+    attachInterrupt(RAIN_GAUGE_PIN, interrupt_handler, FALLING);
+#endif
 
     LoRaWAN.ifskipjoin();
 }
