@@ -1,24 +1,52 @@
+/*
+ * Describes the currently running version. This value is transmitted next to
+ * the battery voltage and helps to keep track what software version is running
+ * on nodes. It should be increased whenever a significant change to logic
+ * happens which may change the behaviour of a running device.
+ */
 #define VERSION 4
 
+// How often to send battery voltage (and version) in minutes
 #define BATTERY_SEND_INTERVAL 360 // 6 hours
+// How often to send OneWire temperature in minutes
 #define ONEWIRE_SEND_INTERVAL 30
-#define SONAR_SEND_INTERVAL 10
+// How often to send MB7389 sonic distance in minutes
+#define SONIC_SEND_INTERVAL 10
+// How often to send VH400 moisture in minutes
 #define VH400_SEND_INTERVAL 3
 
+/*
+ * Setting PINs to devices will enable them within the code. The default values
+ * presented here work fine with Heltec CubeCell boards, allowing to attach all
+ * sensor at once. However it is also possible to remove any PIN definition and
+ * thereby disable the sensor completely.
+ */
 // #define ONEWIRE_PIN GPIO4
-// #define SONAR_RX_PIN GPIO1
+#define SONIC_RX_PIN GPIO1
 // #define RAIN_GAUGE_PIN GPIO5
-#define VH400_PIN ADC2
+// #define VH400_PIN ADC2
 
+// This defines the fallback value of mm/t if not provided by the node
+// configuration file. The default value corresponds to a HOBO RG3.
 #define DEFAULT_MM_PER_COUNT 0.254 // 0.01"
 
-/* OTAA para should be set via AT commands */
+/*
+ * All options below are advanced and specifically for the LoRaWAN library used.
+ * None of these values should require manual changes except when using outside
+ * the US915 zone or using ABP rather than OTAA.
+ */
+
+// OTAA parameters should be set via AT commands in the configuration file.
 uint8_t devEui[] = {0xC0, 0xFF, 0xEE, 0xC0, 0xFF, 0xEE, 0xCA, 0xFE};
 uint8_t appEui[] = {0xC0, 0xFF, 0xEE, 0xC0, 0xFF, 0xEE, 0xCA, 0xFE};
 uint8_t appKey[] = {0xC0, 0xFF, 0xEE, 0xC0, 0xFF, 0xEE, 0xC0, 0xFF,
                     0xEE, 0xC0, 0xFF, 0xEE, 0xC0, 0xFF, 0xEE, 0x42};
 
-/* ABP para*/
+/*
+ * While it is possible to use ABP it is not recommended, please use OTAA!
+ * OTAA is more secure and allows the node and backend to negotiate an ideal
+ * transmission rate to safe power and air-time.
+ */
 uint8_t nwkSKey[] = {};
 uint8_t appSKey[] = {};
 uint32_t devAddr = (uint32_t)0x0;
