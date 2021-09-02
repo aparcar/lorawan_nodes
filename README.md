@@ -8,6 +8,7 @@
 | `digital_out_1` | running software version (integer) |
 | `temperature_1` | temperature                        |
 | `voltage_1`     | battery voltage                    |
+| `distance_1`    | distance to sea level              |
 
 ## active nodes
 
@@ -22,6 +23,8 @@
 | `rain-box-5`   | `23094809F8DF0982` |
 | `rain-box-6`   | `E8743987987DFEAD` |
 | `temp-box-1`   | `1230918230912830` |
+| `sonic-1`      | `70B3D57ED0044671` |
+| `sonic-2`      | `AFDFADFFADF23948` |
 
 ## versions
 
