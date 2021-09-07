@@ -1,1 +1,1 @@
-float readVH400(uint8_t VH400_PIN);
+float read_VH400(uint8_t VH400_PIN);

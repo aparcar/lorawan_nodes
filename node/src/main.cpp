@@ -129,7 +129,7 @@ static void prepareTxFrame() {
 #endif
 
 #ifdef VH400_PIN
-  vh400_total += read_VH400();
+  vh400_total += read_VH400(VH400_PIN);
   vh400_send_counter++;
   if (vh400_send_counter >= VH400_SEND_INTERVAL) {
     Serial.printf("[%i/%i] Add VH400\n", vh400_send_counter,
@@ -255,7 +255,7 @@ void setup() {
   // Print single test measurement
   Serial.println("Enable sonic sensor");
   Serial.print("distance = ");
-  Serial.print(get_distance(sonicSerial, 1));
+  Serial.print(get_sonic_distance(sonicSerial, 1));
   Serial.println();
 #endif
 
@@ -294,7 +294,7 @@ void loop() {
 // If sonic sensor is enabled it will measure 60 times a minute and return the
 // average. This way waves don't influence tide estimations as much. Since a
 // measurement is required every second the duty cycle is skipped and instead
-// the get_distance function runs, which blocks for 60 seconds.
+// the get_sonic_distance function runs, which blocks for 60 seconds.
 // If no sonic sensor is attached, use the
 #ifdef SONIC_RX_PIN
     LoRaWAN.sleep();
