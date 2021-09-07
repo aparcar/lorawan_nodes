@@ -1,0 +1,13 @@
+site_name: LoRa sensor evaluation
+#site_url: https://aparcar.github.io/lora
+plugins:
+  - search
+markdown_extensions:
+  - pymdownx.highlight
+  - pymdownx.snippets
+  - pymdownx.superfences
+theme:
+  name: 'material'
+  features:
+    - navigation.instant
+
