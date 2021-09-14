@@ -55,15 +55,45 @@ the InfluxDB setup to have *Telegraf* listen to MQTT and store data or for other
 applications.
 
 Below is a short Python script called `mqtt2json.py` which listens to the MQTT
-stream and outputs lines of JSON which can be consumed by other applications.
-A generic script like this allows custom downstream handling of incoming sensor
+stream and outputs lines of JSON which can be consumed by other applications.  A
+generic script like this allows custom downstream handling of incoming sensor
 data. As proof of concept the script below is parsed by another tool adding
 measurements to a SQL database and visualize them via a custom web
-page[grogdata].
+page[grogdata]. Nodes are identified via the `from` field and all payload is
+stored in the `p` field, containing data fields based on
+[CayenneLPP](cayennelpp.md).
 
 [grogdata]: https://grogdata.soest.hawaii.edu/staging/nodepage/node-301/
 [mqtt]: https://mqtt.org
 
 ```python
 --8<-- "mqtt2json.py"
+```
+
+Below is an example output of the script which could be read by future tooling
+using the *JSON Lines* standard[^jsonlines]
+
+[^jsonlines]: https://jsonlines.org/
+
+```
+{"from": "rain-box-5", "p": {"temperature_1": 23.1}}
+{"from": "rain-box-1", "p": {"temperature_1": 23.5}}
+{"from": "sonic-2", "p": {"distance_1": 4.991}}
+{"from": "rain-box-6", "p": {"temperature_1": 21.4}}
+{"from": "rain-box-4", "p": {"digital_out_1": 2, "voltage_1": 4.15}}
+{"from": "sonic-2", "p": {"distance_1": 5}}
+{"from": "rain-box-5", "p": {"digital_out_1": 2, "voltage_1": 4.22}}
+{"from": "sonic-2", "p": {"distance_1": 5}}
+{"from": "rain-box-4", "p": {"temperature_1": 24.7}}
+{"from": "rain-box-5", "p": {"temperature_1": 23.6}}
+{"from": "rain-box-1", "p": {"temperature_1": 23.6}}
+{"from": "sonic-2", "p": {"distance_1": 5}}
+{"from": "rain-box-6", "p": {"temperature_1": 21.5}}
+{"from": "rain-box-3", "p": {"temperature_1": 24.1}}
+{"from": "sonic-2", "p": {"distance_1": 5}}
+{"from": "sonic-2", "p": {"distance_1": 5}}
+{"from": "rain-box-4", "p": {"temperature_1": 24.6}}
+{"from": "rain-box-5", "p": {"temperature_1": 23}}
+{"from": "rain-box-1", "p": {"temperature_1": 23.7}}
+...
 ```

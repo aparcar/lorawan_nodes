@@ -3,7 +3,8 @@ site_name: LoRa sensor evaluation
 plugins:
   - search
 markdown_extensions:
-  - pymdownx.highlight
+  - pymdownx.highlight:
+      linenums: true
   - pymdownx.snippets
   - pymdownx.superfences
   - footnotes
