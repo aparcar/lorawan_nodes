@@ -61,8 +61,8 @@ A running InfluxDB receives data via *Telegraf*, feeding a MQTT stream into the
 time series database. If using the same options as in the InfluxDB section,
 Grafana will present a `mqtt_consumer` table from which data can be selected.
 
-Since the [CayenneLPP](cayennelpp.md) protocol is used to encode senor data for
-LoRaWAN transmission, all fields in the table follow a specific schema:
+Since the [CayenneLPP](/resources/cayennelpp) protocol is used to encode senor
+data for LoRaWAN transmission, all fields in the table follow a specific schema:
 
 ```
 uplink_message_decoded_payload_<cayennelpp_type>_<cayennelpp_id>

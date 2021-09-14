@@ -61,7 +61,7 @@ data. As proof of concept the script below is parsed by another tool adding
 measurements to a SQL database and visualize them via a custom web
 page[grogdata]. Nodes are identified via the `from` field and all payload is
 stored in the `p` field, containing data fields based on
-[CayenneLPP](cayennelpp.md).
+[CayenneLPP](/resources/cayennelpp).
 
 [grogdata]: https://grogdata.soest.hawaii.edu/staging/nodepage/node-301/
 [mqtt]: https://mqtt.org
