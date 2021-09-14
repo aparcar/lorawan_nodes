@@ -1,13 +1,17 @@
 site_name: LoRa sensor evaluation
-#site_url: https://aparcar.github.io/lora
+site_url: https://aparcar.github.io/lorawan_nodes/
+repo_url: https://github.com/aparcar/lorawan_nodes/
+
 plugins:
   - search
+
 markdown_extensions:
   - pymdownx.highlight:
       linenums: true
   - pymdownx.snippets
   - pymdownx.superfences
   - footnotes
+
 theme:
   name: 'material'
   features:
