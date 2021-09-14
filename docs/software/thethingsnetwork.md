@@ -50,10 +50,20 @@ the time of the last received message.
 
 ![](/img/ttn_mqtt.png)
 
-Aboves picture shows the MQTT access 
+Aboves picture shows the MQTT login credentials which can be either used within
+the InfluxDB setup to have *Telegraf* listen to MQTT and store data or for other
+applications.
 
+Below is a short Python script called `mqtt2json.py` which listens to the MQTT
+stream and outputs lines of JSON which can be consumed by other applications.
+A generic script like this allows custom downstream handling of incoming sensor
+data. As proof of concept the script below is parsed by another tool adding
+measurements to a SQL database and visualize them via a custom web
+page[grogdata].
 
+[grogdata]: https://grogdata.soest.hawaii.edu/staging/nodepage/node-301/
 [mqtt]: https://mqtt.org
+
 ```python
 --8<-- "mqtt2json.py"
 ```
