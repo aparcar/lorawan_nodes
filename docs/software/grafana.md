@@ -43,7 +43,7 @@ Therefore it's possible to access the data locally. Other setups may use remote
 database on distributed systems, where data is stored on different machines than
 visualized.
 
-![](/img/grafana_datasource.png)
+![](../img/grafana_datasource.png)
 
 InfluxDB runs per default on port `8086` and if running, is available on
 `localhost`. None of the extra options need to be activated since a local setup
@@ -89,7 +89,7 @@ Instead of having the lengthy full description[^1] of a measurement only the
 device identifier can be shown. To do so the special value
 `$tag_end_device_ids_device_id` is added to the *alias* field.
 
-![](/img/grafana_add_voltage.png)
+![](../img/grafana_add_voltage.png)
 
 [^1]: `mqtt_consumer.uplink_message_decoded_payload_voltage_1 {end_device_ids_device_id: rain-box-6}`
 
@@ -103,7 +103,7 @@ metrics (rain fall and temperature) and below an overview of the nodes over the
 last week. It is possible to interactively select smaller and bigger time frames
 and see precise values for specific times and dates.
 
-![](/img/grafana_rain_temperature.png)
+![](../img/grafana_rain_temperature.png)
 
 Aboves two graphs show rain events that happened at different location in
 Honolulu, Hawaii. It's possible to zoom into specific time ranges to see the
@@ -117,20 +117,20 @@ stationed in a cooled lab, therefore the constantly low temperature.
 Additional values can be measured to track the *health* of sensors, most
 importantly the battery voltages and connection quality (*RSSI*).
 
-![](/img/grafana_voltage.png)
+![](../img/grafana_voltage.png)
 
 
 The graph above shows how the battery voltage is dropping every night but
 recharged on sunrise.
 
-![](/img/grafana_voltage_low.png)
+![](../img/grafana_voltage_low.png)
 
 On the contrary, above graphs show that the node `sonic-2` doesn't recharge via
 it's attached solar panel and therefore shuts off once the battery voltage is to
 low for further LoRa transmissions. The node need manual inspection and
 probably a solar panel replacement.
 
-![](/img/grafana_rssi.png)
+![](../img/grafana_rssi.png)
 
 The graph above shows shows the varying values of RSSI, which describes the
 connection quality. For LoRa values down to **-120dB** are fine for a stable

@@ -172,7 +172,7 @@ modifying clients.
 TheThingsNetwork offers to automatically decode CayenneLPP frames using the
 *Payload Formatter* menu entry.
 
-![](/img/ttn_cayenne.png)
+![](../img/ttn_cayenne.png)
 
 However, since TheThingsNetwork uses the reference implementation of *MyDevices*
 they don't support decoding some additional data types, like distance. If these
@@ -184,7 +184,7 @@ Formatter* menu entry:
 > The `min` decoder version is required as TheThingsNetwork limits the total
 > size of decoding scripts and the formated version exceeds that limit.
 
-![](/img/ttn_javascript.png)
+![](../img/ttn_javascript.png)
 
 [^mydevices]: https://developers.mydevices.com/cayenne/features/
 [^llp]: https://developers.mydevices.com/cayenne/docs/lora/#lora-cayenne-low-power-payload

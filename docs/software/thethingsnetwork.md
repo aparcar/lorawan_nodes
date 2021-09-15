@@ -7,7 +7,7 @@ In short LoRaWAN offers a secure transport for data between sensor nodes
 collecting metrics and a user controlled backend. The illustration below shows
 the stack.
 
-![](/img/lorawan.svg)
+![](../img/lorawan.svg)
 
 Sensor **Nodes** collect data and send it via LoRa radio frequency modulation
 (red lines) to **Gateways**. A gateway has a LoRa compatible radio module and
@@ -43,12 +43,12 @@ which provide sensor data. Received data is offered via an MQTT API can should
 be consumed by a user controlled database, in this setup [InfluxDB](influxdb.md)
 or one of the integrations.
 
-![](/img/ttn_devices.png)
+![](../img/ttn_devices.png)
 
 The above image shows currently active end devices, their identifiers as well as
 the time of the last received message.
 
-![](/img/ttn_mqtt.png)
+![](../img/ttn_mqtt.png)
 
 Aboves picture shows the MQTT login credentials which can be either used within
 the InfluxDB setup to have *Telegraf* listen to MQTT and store data or for other
