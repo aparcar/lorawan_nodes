@@ -7,6 +7,6 @@ gateways. Additional documentation is provided on the custom designed *Printed
 circuit board* (PCB) as well as the casing.
 
 * [Microcontroller](microcontroller.md)
-* Gateways
-* PCB
+* [Gateways](gateways.md)
+* [Printed Circuit Board](pcb.md)
 * Casing

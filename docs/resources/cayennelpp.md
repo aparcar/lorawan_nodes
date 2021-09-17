@@ -186,6 +186,19 @@ Formatter* menu entry:
 
 ![](../img/ttn_javascript.png)
 
+## Used payload types
+
+Within this project the following payload types and IDs are used.
+
+| JSON value      | description                        |
+| ---             | ---                                |
+| `analog_in_1`   | rain mm/m                          |
+| `analog_in_2`   | soil moisture                      |
+| `digital_out_1` | running software version (integer) |
+| `temperature_1` | temperature                        |
+| `voltage_1`     | battery voltage                    |
+| `distance_1`    | distance to sea level              |
+
 [^mydevices]: https://developers.mydevices.com/cayenne/features/
 [^llp]: https://developers.mydevices.com/cayenne/docs/lora/#lora-cayenne-low-power-payload
 [^cats]: https://github.com/ElectronicCats/CayenneLPP/
