@@ -1,6 +1,8 @@
 site_name: LoRa sensor evaluation
 site_url: https://aparcar.github.io/lorawan_nodes/
 repo_url: https://github.com/aparcar/lorawan_nodes/
+copyright: Paul Spooren / CC BY 4.0
+edit_uri: edit/main/docs/
 
 plugins:
   - search
